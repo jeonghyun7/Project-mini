@@ -81,6 +81,8 @@ public class BoardController extends HttpServlet
 				String content = articleMap.get("content");
 				String imageFileName = articleMap.get("imageFileName");
 				
+				System.out.println("imageFileName"); //이름찾기위해서 추가함
+				System.out.println("찾아내보자");		//이름찾기위해서 추가함
 				articleVO.setParentNO(0);
 				articleVO.setId("hong");
 				articleVO.setTitle(title);
@@ -107,7 +109,7 @@ public class BoardController extends HttpServlet
 	{
 		Map<String, String> articleMap = new HashMap<String, String>();
 		String encoding = "utf-8";
-		File currentDirPath = new File(ARTICLE_IMAGE_REPO); //수정함
+		File currentDirPath = new File(ARTICLE_IMAGE_REPO); //업로드할 파일 경로 지정하여 나중에 저장할 위치를 담음
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		factory.setRepository(currentDirPath);
 		factory.setSizeThreshold(1024 * 1024);
@@ -129,6 +131,8 @@ public class BoardController extends HttpServlet
 					System.out.println("파일이름:" + fileItem.getName());
 					System.out.println("파일크기:" + fileItem.getSize() + "bytes");
 	
+					articleMap.put(fileItem.getFieldName(), fileItem.getName()); //이름넣는 추가코드부분
+					
 					if (fileItem.getSize() > 0)
 					{
 						int idx = fileItem.getName().lastIndexOf("\\");
